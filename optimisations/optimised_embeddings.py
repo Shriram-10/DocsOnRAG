@@ -20,7 +20,7 @@ db_url = os.environ.get("QDRANT_DB_URL")
 client = QdrantClient(db_url)
 
 # Base directories
-pdf_base_folder = "./python_docs"
+pdf_base_folder = "../python_docs"
 batch_size = 1000  # Embedding/Qdrant batch size
 collection_name = "python_docs"
 

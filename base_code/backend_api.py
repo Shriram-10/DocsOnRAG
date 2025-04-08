@@ -14,7 +14,7 @@ class QueryRequest(BaseModel):
 @app.post("/generate_response")
 async def generate(query: QueryRequest):
     try:
-        response = await generate_response(query.user_prompt)
+        response = await generate_response(query.user_prompt, max_passes=3, model = 1)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

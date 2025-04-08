@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # FastAPI endpoint
-API_URL = "http://127.0.0.1:8000/generate_response"
+API_URL = "http://127.0.0.1:8001/generate_response"
 
 # Set up page
 st.set_page_config(page_title="AI Coding Assistant", page_icon="🤖", layout="wide")

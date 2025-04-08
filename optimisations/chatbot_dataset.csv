@@ -1,0 +1,4461 @@
+Question,Answer
+How do I define a function in Python?,"Use `def` followed by the name, parentheses for parameters, and a colon. Body is indented.
+
+**Syntax:**
+```python
+def add(a, b):
+    return a + b
+```
+
+- Parameters optional: `def hello(name='World'):`.
+- Returns `None` if no `return`.
+
+**Example:**
+```python
+def multiply(x, y=2):
+    return x * y
+print(multiply(3))  # 6
+print(multiply(3, 4))  # 12
+```
+
+Use `*args` for variable args, `**kwargs` for keyword args. Functions are reusable code blocks."
+What is a list comprehension?,"A concise way to create lists with a loop and condition in one line.
+
+**Syntax:**
+```python
+[expr for item in iterable if cond]
+```
+
+**Examples:**
+```python
+squares = [x**2 for x in range(5)]  # [0, 1, 4, 9, 16]
+evens = [x for x in range(10) if x % 2 == 0]  # [0, 2, 4, 6, 8]
+```
+
+Faster than `for` with `.append()`. Avoid complex logic—keep it readable."
+How do I handle exceptions?,"Use `try`, `except`, `else`, `finally` to manage errors.
+
+**Syntax:**
+```python
+try:
+    x = 1 / 0
+except ZeroDivisionError:
+    print('Div by 0')
+else:
+    print('No error')
+finally:
+    print('Done')
+```
+
+**Example:**
+```python
+try:
+    num = int('abc')
+except ValueError:
+    print('Not a number')
+```
+
+Catch specific exceptions. Use `raise` to throw custom errors."
+What are dictionaries?,"Mutable key-value pairs, unordered pre-3.7, defined with `{}`.
+
+**Syntax:**
+```python
+d = {'a': 1, 'b': 2}
+```
+
+- Access: `d['a']` or `d.get('a')`.
+- Add: `d['c'] = 3`.
+- Delete: `del d['b']`.
+
+**Example:**
+```python
+d = {'name': 'Alice'}
+d['age'] = 25
+print(d)  # {'name': 'Alice', 'age': 25}
+```
+
+Keys must be immutable. Fast lookups via hashing."
+How do I use the `with` statement?,"Manages resources like files, auto-closing them.
+
+**Syntax:**
+```python
+with open('file.txt', 'r') as f:
+    data = f.read()
+```
+
+**Example:**
+```python
+with open('out.txt', 'w') as f:
+    f.write('Hi')
+```
+
+No need to call `close()`. Exception-safe."
+What’s the difference between `==` and `is`?,"`==` checks value equality; `is` checks identity.
+
+**Examples:**
+```python
+a = [1, 2]
+b = [1, 2]
+print(a == b)  # True
+print(a is b)  # False
+a = b
+print(a is b)  # True
+```
+
+Use `is` for `None` checks, `==` for values."
+How do I create a class?,"Use `class`, define attributes and methods with `self`.
+
+**Syntax:**
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+    def bark(self):
+        return f'{self.name} barks'
+```
+
+**Example:**
+```python
+d = Dog('Rex')
+print(d.bark())  # Rex barks
+```
+
+Supports inheritance, class attributes."
+What are lambda functions?,"Anonymous functions for short tasks.
+
+**Syntax:**
+```python
+lambda args: expr
+```
+
+**Example:**
+```python
+double = lambda x: x * 2
+print(double(5))  # 10
+print(list(map(lambda x: x**2, [1, 2])))  # [1, 4]
+```
+
+Single expression, no statements."
+What’s the difference between lists and tuples?,"Lists are mutable (`[]`), tuples are immutable (`()`).
+
+**Examples:**
+```python
+l = [1, 2]
+l[0] = 10  # Works
+t = (1, 2)
+# t[0] = 10  # Error
+```
+
+Tuples are faster, hashable."
+How do I install a module?,"Use `pip install module_name`.
+
+**Example:**
+```bash
+pip install requests
+```
+```python
+import requests
+resp = requests.get('http://example.com')
+```
+
+Use virtual envs: `python -m venv env`."
+What is a generator?,"Yields values one at a time, saving memory.
+
+**Syntax:**
+```python
+def gen():
+    for i in range(3):
+        yield i
+```
+
+**Example:**
+```python
+g = gen()
+print(list(g))  # [0, 1, 2]
+```
+
+Use `next()` to step through."
+How do I use decorators?,"Functions that modify other functions.
+
+**Syntax:**
+```python
+def deco(func):
+    def wrapper():
+        print('Before')
+        func()
+    return wrapper
+@deco
+def say():
+    print('Hi')
+```
+
+**Call:** `say()` → Before
+Hi"
+What’s `deepcopy` vs `copy`?,"`copy` duplicates top-level; `deepcopy` duplicates all levels.
+
+**Example:**
+```python
+from copy import copy, deepcopy
+l = [[1, 2], 3]
+l2 = copy(l)
+l3 = deepcopy(l)
+l[0][0] = 10
+print(l2)  # [[10, 2], 3]
+print(l3)  # [[1, 2], 3]
+```"
+How do I work with dates?,"Use `datetime` module.
+
+**Example:**
+```python
+from datetime import datetime
+d = datetime.now()
+print(d.strftime('%Y-%m-%d'))  # 2025-04-05
+```
+
+Parse: `datetime.strptime('2025-01-01', '%Y-%m-%d')`."
+What are sets?,"Unordered, unique collections with `{}` or `set()`.
+
+**Example:**
+```python
+s = {1, 2, 2}
+print(s)  # {1, 2}
+s.add(3)
+print(s & {2, 3})  # {2, 3}
+```
+
+Fast membership tests."
+How do I read a CSV?,"Use `csv` module or `pandas`.
+
+**Example:**
+```python
+import csv
+with open('data.csv', 'r') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)
+```"
+What’s the `global` keyword?,"Declares a variable as global inside a function.
+
+**Example:**
+```python
+x = 1
+def inc():
+    global x
+    x += 1
+inc()
+print(x)  # 2
+```
+
+Avoid overuse."
+How do I use regex?,"Use `re` module for pattern matching.
+
+**Example:**
+```python
+import re
+text = 'abc123'
+print(re.sub(r'\d+', 'X', text))  # abcX
+print(re.findall(r'\d', text))  # ['1', '2', '3']
+```"
+What’s `__main__`?,"Entry point for scripts.
+
+**Example:**
+```python
+if __name__ == '__main__':
+    print('Running directly')
+```
+
+Allows module imports without execution."
+How do I use recursion?,"Function calls itself with a base case.
+
+**Example:**
+```python
+def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n - 1)
+print(factorial(5))  # 120
+```
+
+Watch stack depth."
+What are Python’s data types?,"Built-ins: `int`, `float`, `str`, `bool`, `list`, `tuple`, `dict`, `set`.
+
+**Examples:**
+```python
+x = 1  # int
+y = 'hi'  # str
+z = [1, 2]  # list
+```
+
+Dynamic typing."
+How do I use `enumerate()`?,"Loops with index and value.
+
+**Example:**
+```python
+l = ['a', 'b']
+for i, v in enumerate(l):
+    print(i, v)  # 0 a, 1 b
+```
+
+Start index: `enumerate(l, 1)`."
+What’s `append()` vs `extend()`?,"`append` adds one item; `extend` adds multiple.
+
+**Example:**
+```python
+l = [1]
+l.append([2, 3])  # [1, [2, 3]]
+l = [1]
+l.extend([2, 3])  # [1, 2, 3]
+```"
+How do I handle CLI args?,"Use `sys.argv` or `argparse`.
+
+**Example:**
+```python
+import sys
+print(sys.argv)  # ['script.py', 'arg1']
+```"
+What’s a context manager?,"Manages resources with `__enter__` and `__exit__`.
+
+**Example:**
+```python
+with open('f.txt') as f:
+    pass
+```"
+How do I use `zip()`?,"Pairs iterables.
+
+**Example:**
+```python
+a = [1, 2]
+b = ['a', 'b']
+print(list(zip(a, b)))  # [(1, 'a'), (2, 'b')]
+```"
+What are properties in classes?,"Control attribute access.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self._x = 0
+    @property
+    def x(self):
+        return self._x
+c = C()
+print(c.x)  # 0
+```"
+How do I debug Python?,"Use `print()`, `pdb`, or IDEs.
+
+**Example:**
+```python
+import pdb
+x = 1
+pdb.set_trace()  # Breakpoint
+x += 1
+```"
+What’s Python 2 vs 3?,"Python 3: Unicode default, `print()` function, no `/` integer division.
+
+Python 2 EOL 2020."
+How do I use the `os` module?,"OS-level operations.
+
+**Example:**
+```python
+import os
+print(os.getcwd())  # Current dir
+os.mkdir('new')
+```"
+What’s a module?,"A `.py` file with code.
+
+**Example:**
+```python
+# mymod.py
+def hi():
+    print('Hi')
+# main.py
+import mymod
+mymod.hi()  # Hi
+```"
+How do I use `sorted()`?,"Sorts iterables.
+
+**Example:**
+```python
+l = [3, 1, 2]
+print(sorted(l))  # [1, 2, 3]
+print(sorted(l, reverse=True))  # [3, 2, 1]
+```"
+What’s a docstring?,"Documents code.
+
+**Example:**
+```python
+def f():
+    '''Does stuff.'''
+    pass
+print(f.__doc__)  # Does stuff.
+```"
+How do I use `filter()`?,"Filters iterables.
+
+**Example:**
+```python
+nums = [1, 2, 3, 4]
+evens = list(filter(lambda x: x % 2 == 0, nums))
+print(evens)  # [2, 4]
+```"
+What’s `map()`?,"Applies a function to all items.
+
+**Example:**
+```python
+nums = [1, 2]
+squares = list(map(lambda x: x**2, nums))
+print(squares)  # [1, 4]
+```"
+How do I use `join()`?,"Joins strings.
+
+**Example:**
+```python
+l = ['a', 'b']
+s = '-'.join(l)
+print(s)  # a-b
+```"
+What’s a virtual environment?,"Isolates dependencies.
+
+**Example:**
+```bash
+python -m venv env
+source env/bin/activate
+```"
+How do I use `random`?,"Generates random values.
+
+**Example:**
+```python
+import random
+print(random.randint(1, 10))  # 1-10
+print(random.choice(['a', 'b']))  # a or b
+```"
+What’s `None`?,"Null value in Python.
+
+**Example:**
+```python
+x = None
+print(x is None)  # True
+```"
+How do I use `split()`?,"Splits strings.
+
+**Example:**
+```python
+s = 'a,b,c'
+print(s.split(','))  # ['a', 'b', 'c']
+```"
+What’s a slice?,"Extracts parts of sequences.
+
+**Example:**
+```python
+l = [0, 1, 2, 3]
+print(l[1:3])  # [1, 2]
+```"
+How do I use `any()` and `all()`?,"Check conditions.
+
+**Example:**
+```python
+l = [True, False]
+print(any(l))  # True
+print(all(l))  # False
+```"
+What’s `pass`?,"No-op placeholder.
+
+**Example:**
+```python
+def f():
+    pass
+```"
+How do I use `format()`?,"Formats strings.
+
+**Example:**
+```python
+s = 'Hi, {}'.format('Alice')
+print(s)  # Hi, Alice
+```"
+What’s a bytecode?,"Compiled Python code run by the VM.
+
+**Example:**
+```python
+import dis
+def f():
+    x = 1
+dis.dis(f)
+```"
+How do I use `input()`?,"Gets user input.
+
+**Example:**
+```python
+x = input('Enter: ')
+print(x)
+```"
+What’s `type()`?,"Returns object type.
+
+**Example:**
+```python
+x = 1
+print(type(x))  # <class 'int'>
+```"
+How do I use `len()`?,"Returns length.
+
+**Example:**
+```python
+l = [1, 2]
+print(len(l))  # 2
+```"
+What’s `id()`?,"Returns object’s memory address.
+
+**Example:**
+```python
+x = 1
+print(id(x))
+```"
+How do I use `range()`?,"Generates numbers.
+
+**Example:**
+```python
+print(list(range(3)))  # [0, 1, 2]
+```"
+What’s `break`?,"Exits a loop.
+
+**Example:**
+```python
+for i in range(5):
+    if i == 2:
+        break
+    print(i)  # 0, 1
+```"
+What’s `continue`?,"Skips to next iteration.
+
+**Example:**
+```python
+for i in range(3):
+    if i == 1:
+        continue
+    print(i)  # 0, 2
+```"
+How do I use `else` with loops?,"Runs if loop completes without `break`.
+
+**Example:**
+```python
+for i in range(3):
+    print(i)
+else:
+    print('Done')  # 0, 1, 2, Done
+```"
+What’s `del`?,"Deletes objects.
+
+**Example:**
+```python
+l = [1, 2]
+del l[0]
+print(l)  # [2]
+```"
+How do I use `strip()`?,"Removes whitespace.
+
+**Example:**
+```python
+s = '  hi  '
+print(s.strip())  # hi
+```"
+What’s `max()` and `min()`?,"Finds extremes.
+
+**Example:**
+```python
+l = [1, 3, 2]
+print(max(l))  # 3
+print(min(l))  # 1
+```"
+How do I use `sum()`?,"Sums iterables.
+
+**Example:**
+```python
+l = [1, 2, 3]
+print(sum(l))  # 6
+```"
+What’s `round()`?,"Rounds numbers.
+
+**Example:**
+```python
+print(round(3.7))  # 4
+```"
+How do I use `abs()`?,"Absolute value.
+
+**Example:**
+```python
+print(abs(-5))  # 5
+```"
+What’s `bool()`?,"Converts to boolean.
+
+**Example:**
+```python
+print(bool(0))  # False
+print(bool(1))  # True
+```"
+How do I use `int()`?,"Converts to integer.
+
+**Example:**
+```python
+print(int('5'))  # 5
+```"
+What’s `float()`?,"Converts to float.
+
+**Example:**
+```python
+print(float('5.5'))  # 5.5
+```"
+How do I use `str()`?,"Converts to string.
+
+**Example:**
+```python
+print(str(5))  # '5'
+```"
+What’s `chr()`?,"Converts int to char.
+
+**Example:**
+```python
+print(chr(65))  # A
+```"
+How do I use `ord()`?,"Char to int.
+
+**Example:**
+```python
+print(ord('A'))  # 65
+```"
+What’s `bin()`?,"Converts to binary string.
+
+**Example:**
+```python
+print(bin(5))  # 0b101
+```"
+How do I use `hex()`?,"Converts to hex string.
+
+**Example:**
+```python
+print(hex(15))  # 0xf
+```"
+What’s `oct()`?,"Converts to octal string.
+
+**Example:**
+```python
+print(oct(8))  # 0o10
+```"
+How do I use `pow()`?,"Raises to power.
+
+**Example:**
+```python
+print(pow(2, 3))  # 8
+```"
+What’s `divmod()`?,"Returns quotient and remainder.
+
+**Example:**
+```python
+print(divmod(7, 2))  # (3, 1)
+```"
+How do I use `sorted()` with key?,"Sorts with a function.
+
+**Example:**
+```python
+l = ['aa', 'b']
+print(sorted(l, key=len))  # ['b', 'aa']
+```"
+What’s `reversed()`?,"Returns reversed iterator.
+
+**Example:**
+```python
+l = [1, 2]
+print(list(reversed(l)))  # [2, 1]
+```"
+How do I use `next()`?,"Gets next item from iterator.
+
+**Example:**
+```python
+it = iter([1, 2])
+print(next(it))  # 1
+```"
+What’s `iter()`?,"Creates an iterator.
+
+**Example:**
+```python
+l = [1, 2]
+it = iter(l)
+print(next(it))  # 1
+```"
+How do I use `isinstance()`?,"Checks type.
+
+**Example:**
+```python
+x = 5
+print(isinstance(x, int))  # True
+```"
+What’s `issubclass()`?,"Checks class inheritance.
+
+**Example:**
+```python
+class A: pass
+class B(A): pass
+print(issubclass(B, A))  # True
+```"
+How do I use `callable()`?,"Checks if callable.
+
+**Example:**
+```python
+def f(): pass
+print(callable(f))  # True
+```"
+What’s `locals()`?,"Returns local variables.
+
+**Example:**
+```python
+def f():
+    x = 1
+    print(locals())  # {'x': 1}
+f()
+```"
+How do I use `globals()`?,"Returns global variables.
+
+**Example:**
+```python
+x = 1
+print(globals()['x'])  # 1
+```"
+What’s `vars()`?,"Returns object’s attributes.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.x = 1
+c = C()
+print(vars(c))  # {'x': 1}
+```"
+How do I use `dir()`?,"Lists attributes.
+
+**Example:**
+```python
+x = 1
+print(dir(x))  # Methods of int
+```"
+What’s `__doc__`?,"Accesses docstring.
+
+**Example:**
+```python
+def f():
+    '''Hi'''
+    pass
+print(f.__doc__)  # Hi
+```"
+How do I use `__slots__`?,"Limits class attributes.
+
+**Example:**
+```python
+class C:
+    __slots__ = ['x']
+    def __init__(self):
+        self.x = 1
+c = C()
+# c.y = 2  # Error
+```"
+What’s `__dict__`?,"Object’s attribute dict.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.x = 1
+c = C()
+print(c.__dict__)  # {'x': 1}
+```"
+How do I check if a string is empty?,"Use `len()` or compare to `''`.
+
+**Examples:**
+```python
+s = ''
+print(len(s) == 0)  # True
+print(s == '')  # True
+print(not s)  # True
+```
+
+`not s` works because empty strings are falsy. Avoid `s is ''`—it’s not guaranteed."
+What’s the `strip()` method do?,"Removes leading/trailing whitespace or specified chars.
+
+**Examples:**
+```python
+s = '  hi  '
+print(s.strip())  # 'hi'
+s = 'xxhelloxx'
+print(s.strip('x'))  # 'hello'
+```
+
+Use `lstrip()` or `rstrip()` for one side."
+How do I convert a list to a string?,"Use `join()`.
+
+**Example:**
+```python
+l = ['a', 'b']
+s = ''.join(l)  # 'ab'
+s2 = ', '.join(l)  # 'a, b'
+```
+
+Elements must be strings—convert non-strings first."
+What’s the `in` operator?,"Checks membership in sequences or mappings.
+
+**Examples:**
+```python
+print('a' in 'abc')  # True
+print(1 in [1, 2])  # True
+print('x' in {'x': 1})  # True (keys only)
+```"
+How do I reverse a list?,"Use `reverse()` or `reversed()`.
+
+**Examples:**
+```python
+l = [1, 2, 3]
+l.reverse()  # [3, 2, 1]
+print(list(reversed(l)))  # [1, 2, 3] (new list)
+```"
+What’s the `pop()` method?,"Removes and returns an item by index.
+
+**Example:**
+```python
+l = [1, 2, 3]
+x = l.pop(1)  # x = 2, l = [1, 3]
+last = l.pop()  # last = 3, l = [1]
+```"
+How do I find an item’s index?,"Use `index()`.
+
+**Example:**
+```python
+l = ['a', 'b', 'a']
+print(l.index('a'))  # 0 (first occurrence)
+# Raises ValueError if not found
+```"
+What’s the `count()` method?,"Counts occurrences in a sequence.
+
+**Example:**
+```python
+l = [1, 2, 1]
+print(l.count(1))  # 2
+s = 'hello'
+print(s.count('l'))  # 2
+```"
+How do I sort a list?,"Use `sort()` or `sorted()`.
+
+**Examples:**
+```python
+l = [3, 1, 2]
+l.sort()  # [1, 2, 3]
+print(sorted(l, reverse=True))  # [3, 2, 1] (new list)
+```"
+What’s a frozen set?,"Immutable version of a set.
+
+**Example:**
+```python
+fs = frozenset([1, 2, 2])
+print(fs)  # frozenset({1, 2})
+# fs.add(3)  # Error
+```"
+How do I use `clear()`?,"Empties a mutable collection.
+
+**Example:**
+```python
+l = [1, 2]
+l.clear()  # []
+d = {'a': 1}
+d.clear()  # {}
+```"
+What’s the `update()` method?,"Adds items to a dict or set.
+
+**Examples:**
+```python
+d = {'a': 1}
+d.update({'b': 2})  # {'a': 1, 'b': 2}
+s = {1}
+s.update([2, 3])  # {1, 2, 3}
+```"
+How do I use `items()`?,"Returns dict key-value pairs.
+
+**Example:**
+```python
+d = {'a': 1, 'b': 2}
+for k, v in d.items():
+    print(k, v)  # a 1, b 2
+```"
+What’s `keys()`?,"Returns dict keys.
+
+**Example:**
+```python
+d = {'a': 1, 'b': 2}
+print(list(d.keys()))  # ['a', 'b']
+```"
+How do I use `values()`?,"Returns dict values.
+
+**Example:**
+```python
+d = {'a': 1, 'b': 2}
+print(list(d.values()))  # [1, 2]
+```"
+What’s a default dict?,"Dict with default value for missing keys.
+
+**Example:**
+```python
+from collections import defaultdict
+d = defaultdict(int)
+d['a'] += 1  # {'a': 1}
+```"
+How do I use `setdefault()`?,"Gets value or sets default if key missing.
+
+**Example:**
+```python
+d = {'a': 1}
+x = d.setdefault('b', 2)  # x = 2, d = {'a': 1, 'b': 2}
+```"
+What’s a named tuple?,"Tuple with named fields.
+
+**Example:**
+```python
+from collections import namedtuple
+Point = namedtuple('Point', ['x', 'y'])
+p = Point(1, 2)
+print(p.x)  # 1
+```"
+How do I use `deque`?,"Double-ended queue for fast appends/pops.
+
+**Example:**
+```python
+from collections import deque
+d = deque([1, 2])
+d.appendleft(0)  # deque([0, 1, 2])
+```"
+What’s `Counter`?,"Counts hashable objects.
+
+**Example:**
+```python
+from collections import Counter
+c = Counter('hello')
+print(c)  # Counter({'l': 2, 'h': 1, 'e': 1, 'o': 1})
+```"
+How do I use `chain()`?,"Combines iterables.
+
+**Example:**
+```python
+from itertools import chain
+print(list(chain([1, 2], [3])))  # [1, 2, 3]
+```"
+What’s `permutations()`?,"Generates all permutations.
+
+**Example:**
+```python
+from itertools import permutations
+print(list(permutations([1, 2])))  # [(1, 2), (2, 1)]
+```"
+How do I use `combinations()`?,"Generates combinations.
+
+**Example:**
+```python
+from itertools import combinations
+print(list(combinations([1, 2, 3], 2)))  # [(1, 2), (1, 3), (2, 3)]
+```"
+What’s `product()`?,"Cartesian product of iterables.
+
+**Example:**
+```python
+from itertools import product
+print(list(product([1, 2], ['a'])))  # [(1, 'a'), (2, 'a')]
+```"
+How do I use `groupby()`?,"Groups sorted data.
+
+**Example:**
+```python
+from itertools import groupby
+l = sorted(['aa', 'b', 'aaa'], key=len)
+for k, g in groupby(l, key=len):
+    print(k, list(g))  # 1 ['b'], 2 ['aa'], 3 ['aaa']
+```"
+What’s `accumulate()`?,"Running totals.
+
+**Example:**
+```python
+from itertools import accumulate
+print(list(accumulate([1, 2, 3])))  # [1, 3, 6]
+```"
+How do I use `tee()`?,"Duplicates an iterator.
+
+**Example:**
+```python
+from itertools import tee
+it = iter([1, 2])
+it1, it2 = tee(it)
+print(list(it1))  # [1, 2]
+print(list(it2))  # [1, 2]
+```"
+What’s `cycle()`?,"Loops an iterable infinitely.
+
+**Example:**
+```python
+from itertools import cycle, islice
+print(list(islice(cycle([1, 2]), 4)))  # [1, 2, 1, 2]
+```"
+How do I use `repeat()`?,"Repeats a value.
+
+**Example:**
+```python
+from itertools import repeat
+print(list(repeat(5, 3)))  # [5, 5, 5]
+```"
+What’s `islice()`?,"Slices an iterator.
+
+**Example:**
+```python
+from itertools import islice
+print(list(islice(range(10), 2, 5)))  # [2, 3, 4]
+```"
+How do I use `starmap()`?,"Applies function to unpacked args.
+
+**Example:**
+```python
+from itertools import starmap
+print(list(starmap(pow, [(2, 3), (3, 2)])))  # [8, 9]
+```"
+What’s `dropwhile()`?,"Drops items while condition true.
+
+**Example:**
+```python
+from itertools import dropwhile
+print(list(dropwhile(lambda x: x < 3, [1, 2, 3, 2])))  # [3, 2]
+```"
+How do I use `takewhile()`?,"Takes items while condition true.
+
+**Example:**
+```python
+from itertools import takewhile
+print(list(takewhile(lambda x: x < 3, [1, 2, 3])))  # [1, 2]
+```"
+What’s `filterfalse()`?,"Filters where condition false.
+
+**Example:**
+```python
+from itertools import filterfalse
+print(list(filterfalse(lambda x: x % 2, [1, 2, 3])))  # [2]
+```"
+How do I use `zip_longest()`?,"Zips with fill for uneven lengths.
+
+**Example:**
+```python
+from itertools import zip_longest
+print(list(zip_longest([1, 2], [1])))  # [(1, 1), (2, None)]
+```"
+What’s the `math` module?,"Math functions.
+
+**Example:**
+```python
+import math
+print(math.sqrt(16))  # 4.0
+print(math.pi)  # 3.14159...
+```"
+How do I use `ceil()`?,"Rounds up.
+
+**Example:**
+```python
+import math
+print(math.ceil(3.2))  # 4
+```"
+What’s `floor()`?,"Rounds down.
+
+**Example:**
+```python
+import math
+print(math.floor(3.7))  # 3
+```"
+How do I use `trunc()`?,"Truncates decimal.
+
+**Example:**
+```python
+import math
+print(math.trunc(3.7))  # 3
+```"
+What’s `factorial()`?,"Computes factorial.
+
+**Example:**
+```python
+import math
+print(math.factorial(5))  # 120
+```"
+How do I use `gcd()`?,"Greatest common divisor.
+
+**Example:**
+```python
+import math
+print(math.gcd(48, 18))  # 6
+```"
+What’s `lcm()`?,"Least common multiple (Python 3.9+).
+
+**Example:**
+```python
+import math
+print(math.lcm(4, 6))  # 12
+```"
+How do I use `log()`?,"Computes logarithm.
+
+**Example:**
+```python
+import math
+print(math.log(8, 2))  # 3.0
+```"
+What’s `exp()`?,"Exponential function.
+
+**Example:**
+```python
+import math
+print(math.exp(1))  # 2.71828...
+```"
+How do I use `sin()`?,"Sine in radians.
+
+**Example:**
+```python
+import math
+print(math.sin(math.pi / 2))  # 1.0
+```"
+What’s `cos()`?,"Cosine in radians.
+
+**Example:**
+```python
+import math
+print(math.cos(0))  # 1.0
+```"
+How do I use `tan()`?,"Tangent in radians.
+
+**Example:**
+```python
+import math
+print(math.tan(math.pi / 4))  # 1.0
+```"
+What’s `degrees()`?,"Radians to degrees.
+
+**Example:**
+```python
+import math
+print(math.degrees(math.pi))  # 180.0
+```"
+How do I use `radians()`?,"Degrees to radians.
+
+**Example:**
+```python
+import math
+print(math.radians(180))  # 3.14159...
+```"
+What’s `hypot()`?,"Hypotenuse of right triangle.
+
+**Example:**
+```python
+import math
+print(math.hypot(3, 4))  # 5.0
+```"
+How do I use `fsum()`?,"Accurate float sum.
+
+**Example:**
+```python
+import math
+print(math.fsum([0.1] * 10))  # 1.0
+```"
+What’s `isclose()`?,"Compares floats with tolerance.
+
+**Example:**
+```python
+import math
+print(math.isclose(0.1 + 0.2, 0.3))  # True
+```"
+How do I use `erf()`?,"Error function.
+
+**Example:**
+```python
+import math
+print(math.erf(0))  # 0.0
+```"
+What’s `gamma()`?,"Gamma function.
+
+**Example:**
+```python
+import math
+print(math.gamma(5))  # 24.0
+```"
+How do I use `lgamma()`?,"Log of gamma.
+
+**Example:**
+```python
+import math
+print(math.lgamma(5))  # 3.17805...
+```"
+What’s the `statistics` module?,"Basic stats functions.
+
+**Example:**
+```python
+from statistics import mean
+print(mean([1, 2, 3]))  # 2
+```"
+How do I use `median()`?,"Finds median.
+
+**Example:**
+```python
+from statistics import median
+print(median([1, 3, 2]))  # 2
+```"
+What’s `mode()`?,"Most common value.
+
+**Example:**
+```python
+from statistics import mode
+print(mode([1, 1, 2]))  # 1
+```"
+How do I use `stdev()`?,"Standard deviation.
+
+**Example:**
+```python
+from statistics import stdev
+print(stdev([1, 2, 3]))  # 1.0
+```"
+What’s `variance()`?,"Variance of data.
+
+**Example:**
+```python
+from statistics import variance
+print(variance([1, 2, 3]))  # 1.0
+```"
+How do I use `pvariance()`?,"Population variance.
+
+**Example:**
+```python
+from statistics import pvariance
+print(pvariance([1, 2, 3]))  # 0.666...
+```"
+What’s `quantiles()`?,"Divides data into intervals.
+
+**Example:**
+```python
+from statistics import quantiles
+print(quantiles([1, 2, 3, 4], n=2))  # [2.5]
+```"
+How do I use `correlation()`?,"Pearson correlation (Python 3.10+).
+
+**Example:**
+```python
+from statistics import correlation
+print(correlation([1, 2, 3], [2, 4, 6]))  # 1.0
+```"
+What’s `covariance()`?,"Covariance of two sequences.
+
+**Example:**
+```python
+from statistics import covariance
+print(covariance([1, 2, 3], [2, 4, 6]))  # 2.0
+```"
+How do I use `linear_regression()`?,"Slope and intercept (Python 3.10+).
+
+**Example:**
+```python
+from statistics import linear_regression
+slope, intercept = linear_regression([1, 2], [2, 4])
+print(slope, intercept)  # 2.0, 0.0
+```"
+What’s the `time` module?,"Time-related functions.
+
+**Example:**
+```python
+import time
+print(time.time())  # Unix timestamp
+```"
+How do I use `sleep()`?,"Pauses execution.
+
+**Example:**
+```python
+import time
+time.sleep(1)  # Wait 1 second
+print('Done')
+```"
+What’s `ctime()`?,"Converts timestamp to string.
+
+**Example:**
+```python
+import time
+print(time.ctime())  # e.g., Sat Apr 5 12:00:00 2025
+```"
+How do I use `perf_counter()`?,"High-res performance timing.
+
+**Example:**
+```python
+import time
+start = time.perf_counter()
+time.sleep(1)
+print(time.perf_counter() - start)  # ~1.0
+```"
+What’s `monotonic()`?,"Non-decreasing time.
+
+**Example:**
+```python
+import time
+print(time.monotonic())  # Monotonic timestamp
+```"
+How do I use `strftime()`?,"Formats time.
+
+**Example:**
+```python
+import time
+print(time.strftime('%Y-%m-%d'))  # 2025-04-05
+```"
+What’s `strptime()`?,"Parses time string.
+
+**Example:**
+```python
+import time
+t = time.strptime('2025-04-05', '%Y-%m-%d')
+print(t.tm_year)  # 2025
+```"
+How doI use `pathlib`?,"Modern path handling.
+
+**Example:**
+```python
+from pathlib import Path
+p = Path('file.txt')
+print(p.exists())  # True/False
+```"
+What’s `Path.cwd()`?,"Current working directory.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path.cwd())  # /current/dir
+```"
+How do I use `Path.glob()`?,"Finds files matching pattern.
+
+**Example:**
+```python
+from pathlib import Path
+print(list(Path('.').glob('*.txt')))  # List of .txt files
+```"
+What’s `Path.read_text()`?,"Reads file as string.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('file.txt').read_text())
+```"
+How do I use `Path.write_text()`?,"Writes string to file.
+
+**Example:**
+```python
+from pathlib import Path
+Path('file.txt').write_text('Hi')
+```"
+What’s `Path.mkdir()`?,"Creates directory.
+
+**Example:**
+```python
+from pathlib import Path
+Path('new_dir').mkdir(exist_ok=True)
+```"
+How do I use `Path.resolve()`?,"Absolute path.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('file.txt').resolve())  # Full path
+```"
+What’s `Path.is_dir()`?,"Checks if path is directory.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('.').is_dir())  # True
+```"
+How do I use `Path.is_file()`?,"Checks if path is file.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('file.txt').is_file())  # True/False
+```"
+What’s `Path.suffix`?,"File extension.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('file.txt').suffix)  # .txt
+```"
+How do I use `Path.stem`?,"File name without extension.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('file.txt').stem)  # file
+```"
+What’s `Path.parent`?,"Parent directory.
+
+**Example:**
+```python
+from pathlib import Path
+print(Path('/a/b/c.txt').parent)  # /a/b
+```"
+How do I use `Path.joinpath()`?,"Joins path components.
+
+**Example:**
+```python
+from pathlib import Path
+p = Path('/a').joinpath('b', 'c.txt')
+print(p)  # /a/b/c.txt
+```"
+How do I check if a file exists?,"Use `os.path.exists()` or `pathlib.Path.exists()`.
+
+**Examples:**
+```python
+import os
+print(os.path.exists('file.txt'))  # True/False
+
+from pathlib import Path
+print(Path('file.txt').exists())  # True/False
+```
+
+`pathlib` is more modern and object-oriented."
+What’s `os.path.join()`?,"Joins path components OS-agnostically.
+
+**Example:**
+```python
+import os
+path = os.path.join('dir', 'file.txt')
+print(path)  # dir/file.txt (or dir\file.txt on Windows)
+```"
+How do I get the file size?,"Use `os.path.getsize()` or `Path.stat()`.
+
+**Example:**
+```python
+import os
+print(os.path.getsize('file.txt'))  # Size in bytes
+
+from pathlib import Path
+print(Path('file.txt').stat().st_size)  # Size in bytes
+```"
+What’s `os.remove()`?,"Deletes a file.
+
+**Example:**
+```python
+import os
+os.remove('file.txt')
+```
+
+Raises `FileNotFoundError` if missing."
+How do I delete a directory?,"Use `os.rmdir()` for empty dirs or `shutil.rmtree()` for non-empty.
+
+**Example:**
+```python
+import os
+os.rmdir('empty_dir')
+
+import shutil
+shutil.rmtree('full_dir')
+```"
+What’s `os.listdir()`?,"Lists dir contents.
+
+**Example:**
+```python
+import os
+print(os.listdir('.'))  # ['file.txt', 'dir', ...]
+```"
+How do I create a directory?,"Use `os.mkdir()` or `os.makedirs()`.
+
+**Example:**
+```python
+import os
+os.mkdir('new_dir')
+os.makedirs('parent/child', exist_ok=True)  # Recursive
+```"
+What’s `os.getenv()`?,"Gets environment variable.
+
+**Example:**
+```python
+import os
+print(os.getenv('PATH'))  # System PATH
+print(os.getenv('MY_VAR', 'default'))  # Default if unset
+```"
+How do I set an env variable?,"Use `os.environ`.
+
+**Example:**
+```python
+import os
+os.environ['MY_VAR'] = 'value'
+print(os.getenv('MY_VAR'))  # value
+```"
+What’s `sys.path`?,"List of module search paths.
+
+**Example:**
+```python
+import sys
+print(sys.path)  # ['/path/to/script', ...]
+sys.path.append('/custom/path')
+```"
+How do I exit a script?,"Use `sys.exit()`.
+
+**Example:**
+```python
+import sys
+sys.exit(0)  # 0 = success, non-zero = error
+```"
+What’s `sys.version`?,"Python version info.
+
+**Example:**
+```python
+import sys
+print(sys.version)  # e.g., 3.11.0 ...
+```"
+How do I use `sys.stdin`?,"Reads from standard input.
+
+**Example:**
+```python
+import sys
+for line in sys.stdin:
+    print(line.strip())
+```"
+What’s `sys.stdout`?,"Writes to standard output.
+
+**Example:**
+```python
+import sys
+sys.stdout.write('Hi\n')
+```"
+How do I use `sys.stderr`?,"Writes to standard error.
+
+**Example:**
+```python
+import sys
+sys.stderr.write('Error\n')
+```"
+What’s `platform` module?,"System info.
+
+**Example:**
+```python
+import platform
+print(platform.system())  # Windows/Linux
+print(platform.python_version())  # 3.11.0
+```"
+How do I use `getpass()`?,"Securely gets password input.
+
+**Example:**
+```python
+from getpass import getpass
+pwd = getpass('Password: ')  # No echo
+```"
+What’s `uuid` module?,"Generates unique IDs.
+
+**Example:**
+```python
+import uuid
+print(uuid.uuid4())  # e.g., 123e4567-...
+```"
+How do I use `hashlib`?,"Creates hashes.
+
+**Example:**
+```python
+import hashlib
+h = hashlib.sha256(b'hello')
+print(h.hexdigest())  # 64-char hash
+```"
+What’s `pickle` module?,"Serializes Python objects.
+
+**Example:**
+```python
+import pickle
+d = {'a': 1}
+with open('data.pkl', 'wb') as f:
+    pickle.dump(d, f)
+```"
+How do I read a pickle file?,"Use `pickle.load()`.
+
+**Example:**
+```python
+import pickle
+with open('data.pkl', 'rb') as f:
+    d = pickle.load(f)
+print(d)  # {'a': 1}
+```"
+What’s `base64` module?,"Encodes/decodes base64.
+
+**Example:**
+```python
+import base64
+enc = base64.b64encode(b'hi')  # b'aGk='
+dec = base64.b64decode(enc)  # b'hi'
+```"
+How do I use `zlib`?,"Compresses data.
+
+**Example:**
+```python
+import zlib
+data = b'hello' * 10
+comp = zlib.compress(data)
+decomp = zlib.decompress(comp)
+```"
+What’s `gzip` module?,"Handles gzip files.
+
+**Example:**
+```python
+import gzip
+with gzip.open('file.gz', 'wt') as f:
+    f.write('hello')
+```"
+How do I use `tarfile`?,"Creates/extracts tar archives.
+
+**Example:**
+```python
+import tarfile
+with tarfile.open('archive.tar', 'w') as tar:
+    tar.add('file.txt')
+```"
+What’s `zipfile` module?,"Handles zip files.
+
+**Example:**
+```python
+import zipfile
+with zipfile.ZipFile('archive.zip', 'w') as zf:
+    zf.write('file.txt')
+```"
+How do I extract a zip?,"Use `ZipFile.extractall()`.
+
+**Example:**
+```python
+import zipfile
+with zipfile.ZipFile('archive.zip', 'r') as zf:
+    zf.extractall('dest')
+```"
+What’s `tempfile` module?,"Creates temporary files/dirs.
+
+**Example:**
+```python
+import tempfile
+with tempfile.NamedTemporaryFile() as tmp:
+    print(tmp.name)
+```"
+How do I use `logging`?,"Logs messages.
+
+**Example:**
+```python
+import logging
+logging.basicConfig(level=logging.INFO)
+logging.info('Hi')  # INFO:root:Hi
+```"
+What’s `warnings` module?,"Issues warnings.
+
+**Example:**
+```python
+import warnings
+warnings.warn('Careful!')  # UserWarning: Careful!
+```"
+How do I use `traceback`?,"Formats exceptions.
+
+**Example:**
+```python
+import traceback
+try:
+    1 / 0
+except:
+    traceback.print_exc()
+```"
+What’s `dis` module?,"Disassembles bytecode.
+
+**Example:**
+```python
+import dis
+def f():
+    x = 1
+dis.dis(f)
+```"
+How do I use `inspect`?,"Inspects live objects.
+
+**Example:**
+```python
+import inspect
+def f():
+    pass
+print(inspect.signature(f))  # ()
+```"
+What’s `gc` module?,"Controls garbage collection.
+
+**Example:**
+```python
+import gc
+gc.collect()  # Force collection
+print(gc.isenabled())  # True
+```"
+How do I use `weakref`?,"Creates weak references.
+
+**Example:**
+```python
+import weakref
+class C: pass
+obj = C()
+wr = weakref.ref(obj)
+```"
+What’s `atexit` module?,"Registers exit handlers.
+
+**Example:**
+```python
+import atexit
+def bye():
+    print('Bye')
+atexit.register(bye)
+```"
+How do I use `signal`?,"Handles signals.
+
+**Example:**
+```python
+import signal
+import time
+def handler(sig, frame):
+    print('Caught')
+signal.signal(signal.SIGINT, handler)
+time.sleep(5)  # Ctrl+C to test
+```"
+What’s `threading` module?,"Runs threads.
+
+**Example:**
+```python
+import threading
+def run():
+    print('Running')
+t = threading.Thread(target=run)
+t.start()
+t.join()
+```"
+How do I use `Lock`?,"Synchronizes threads.
+
+**Example:**
+```python
+import threading
+lock = threading.Lock()
+with lock:
+    print('Locked')
+```"
+What’s `Queue`?,"Thread-safe queue.
+
+**Example:**
+```python
+from queue import Queue
+q = Queue()
+q.put(1)
+print(q.get())  # 1
+```"
+How do I use `multiprocessing`?,"Runs processes.
+
+**Example:**
+```python
+from multiprocessing import Process
+def f():
+    print('Hi')
+p = Process(target=f)
+p.start()
+p.join()
+```"
+What’s `Pool`?,"Parallelizes tasks.
+
+**Example:**
+```python
+from multiprocessing import Pool
+def f(x):
+    return x * x
+with Pool(2) as p:
+    print(p.map(f, [1, 2]))  # [1, 4]
+```"
+How do I use `asyncio`?,"Runs async code.
+
+**Example:**
+```python
+import asyncio
+async def say():
+    await asyncio.sleep(1)
+    print('Hi')
+asyncio.run(say())
+```"
+What’s `await`?,"Pauses async function.
+
+**Example:**
+```python
+import asyncio
+async def f():
+    await asyncio.sleep(1)
+    return 2
+print(asyncio.run(f()))  # 2
+```"
+How do I use `async with`?,"Async context manager.
+
+**Example:**
+```python
+import asyncio
+async def f():
+    async with asyncio.Lock():
+        print('Locked')
+asyncio.run(f())
+```"
+What’s `Task` in asyncio?,"Schedules coroutines.
+
+**Example:**
+```python
+import asyncio
+async def f():
+    await asyncio.sleep(1)
+    print('Done')
+async def main():
+    task = asyncio.create_task(f())
+    await task
+asyncio.run(main())
+```"
+How do I use `gather()`?,"Runs multiple coroutines.
+
+**Example:**
+```python
+import asyncio
+async def f(x):
+    return x
+print(asyncio.run(asyncio.gather(f(1), f(2))))  # [1, 2]
+```"
+What’s `socket` module?,"Network sockets.
+
+**Example:**
+```python
+import socket
+s = socket.socket()
+s.connect(('localhost', 1234))
+s.send(b'Hi')
+```"
+How do I use `http.client`?,"HTTP requests.
+
+**Example:**
+```python
+import http.client
+conn = http.client.HTTPSConnection('example.com')
+conn.request('GET', '/')
+resp = conn.getresponse()
+```"
+What’s `urllib.request`?,"Fetches URLs.
+
+**Example:**
+```python
+from urllib.request import urlopen
+with urlopen('http://example.com') as resp:
+    print(resp.read())
+```"
+How do I use `email` module?,"Creates email messages.
+
+**Example:**
+```python
+from email.mime.text import MIMEText
+msg = MIMEText('Hi')
+msg['Subject'] = 'Test'
+msg['From'] = 'me@example.com'
+msg['To'] = 'you@example.com'
+```"
+What’s `smtplib`?,"Sends emails.
+
+**Example:**
+```python
+import smtplib
+from email.mime.text import MIMEText
+msg = MIMEText('Hi')
+with smtplib.SMTP('localhost', 1025) as s:
+    s.send_message(msg)
+```"
+How do I use `ftplib`?,"FTP client.
+
+**Example:**
+```python
+from ftplib import FTP
+with FTP('ftp.example.com') as ftp:
+    ftp.login()
+    ftp.retrlines('LIST')
+```"
+What’s `subprocess` module?,"Runs shell commands.
+
+**Example:**
+```python
+import subprocess
+subprocess.run(['ls', '-l'])  # dir on Windows
+```"
+How do I use `check_output()`?,"Captures command output.
+
+**Example:**
+```python
+import subprocess
+out = subprocess.check_output(['echo', 'Hi'])
+print(out)  # b'Hi\n'
+```"
+What’s `Popen`?,"Advanced subprocess control.
+
+**Example:**
+```python
+import subprocess
+p = subprocess.Popen(['echo', 'Hi'], stdout=subprocess.PIPE)
+out, _ = p.communicate()
+print(out)  # b'Hi\n'
+```"
+How do I use `shlex`?,"Splits shell-like strings.
+
+**Example:**
+```python
+import shlex
+print(shlex.split('ls -l'))  # ['ls', '-l']
+```"
+What’s `fnmatch`?,"Matches filenames.
+
+**Example:**
+```python
+import fnmatch
+print(fnmatch.fnmatch('file.txt', '*.txt'))  # True
+```"
+How do I use `glob`?,"Finds files with wildcards.
+
+**Example:**
+```python
+import glob
+print(glob.glob('*.txt'))  # ['file.txt', ...]
+```"
+What’s `shutil.copy()`?,"Copies files.
+
+**Example:**
+```python
+import shutil
+shutil.copy('file.txt', 'file_copy.txt')
+```"
+How do I use `shutil.move()`?,"Moves files/dirs.
+
+**Example:**
+```python
+import shutil
+shutil.move('file.txt', 'dest/file.txt')
+```"
+What’s `configparser`?,"Parses .ini files.
+
+**Example:**
+```python
+import configparser
+config = configparser.ConfigParser()
+config.read('config.ini')
+print(config['section']['key'])
+```"
+How do I use `argparse`?,"Parses CLI args.
+
+**Example:**
+```python
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--name')
+args = parser.parse_args(['--name', 'Alice'])
+print(args.name)  # Alice
+```"
+What’s `optparse`?,"Older CLI parser (deprecated).
+
+**Example:**
+```python
+from optparse import OptionParser
+parser = OptionParser()
+parser.add_option('--name')
+options, args = parser.parse_args(['--name', 'Alice'])
+```"
+How do I use `getopt`?,"C-style CLI parsing.
+
+**Example:**
+```python
+import getopt
+opts, args = getopt.getopt(['-n', 'Alice'], 'n:')
+print(opts)  # [('-n', 'Alice')]
+```"
+What’s `datetime.timedelta`?,"Time duration.
+
+**Example:**
+```python
+from datetime import datetime, timedelta
+d = datetime.now()
+print(d + timedelta(days=1))  # Tomorrow
+```"
+How do I use `datetime.date`?,"Date without time.
+
+**Example:**
+```python
+from datetime import date
+d = date(2025, 4, 5)
+print(d)  # 2025-04-05
+```"
+What’s `datetime.time`?,"Time without date.
+
+**Example:**
+```python
+from datetime import time
+t = time(12, 30)
+print(t)  # 12:30:00
+```"
+How do I use `datetime.datetime`?,"Full date and time.
+
+**Example:**
+```python
+from datetime import datetime
+dt = datetime(2025, 4, 5, 12, 30)
+print(dt)  # 2025-04-05 12:30:00
+```"
+What’s `time.perf_counter_ns()`?,"Nanosecond precision timing.
+
+**Example:**
+```python
+import time
+start = time.perf_counter_ns()
+time.sleep(1)
+print(time.perf_counter_ns() - start)  # ~1e9
+```"
+How do I use `calendar`?,"Calendar functions.
+
+**Example:**
+```python
+import calendar
+print(calendar.month(2025, 4))  # April 2025
+```"
+What’s `locale` module?,"Handles regional settings.
+
+**Example:**
+```python
+import locale
+locale.setlocale(locale.LC_ALL, '')
+print(locale.format_string('%d', 1000, grouping=True))  # 1,000
+```"
+How do I use `textwrap`?,"Wraps text.
+
+**Example:**
+```python
+import textwrap
+print(textwrap.fill('long text here', width=5))  # long
+text
+here
+```"
+What’s `unicodedata`?,"Unicode info.
+
+**Example:**
+```python
+import unicodedata
+print(unicodedata.name('€'))  # EURO SIGN
+```"
+How do I use `string` module?,"String constants.
+
+**Example:**
+```python
+import string
+print(string.ascii_letters)  # abc...xyzABC...XYZ
+```"
+How do I write JSON to file?,"Use `json.dump()`.
+
+**Example:**
+```python
+import json
+d = {'a': 1}
+with open('data.json', 'w') as f:
+    json.dump(d, f)
+```"
+How do I check if a variable is defined?,"Use `try` or `locals()`/`globals()`.
+
+**Examples:**
+```python
+try:
+    x
+except NameError:
+    print('Not defined')
+else:
+    print('Defined')
+
+x = 1
+print('x' in globals())  # True
+print('y' in locals())  # False
+```
+
+`try` is safest for runtime checks."
+What’s the `nonlocal` keyword?,"Accesses outer scope variables in nested functions.
+
+**Example:**
+```python
+def outer():
+    x = 1
+    def inner():
+        nonlocal x
+        x = 2
+    inner()
+    print(x)  # 2
+outer()
+```"
+How do I use `assert`?,"Tests a condition, raises `AssertionError` if false.
+
+**Example:**
+```python
+x = 5
+assert x > 0, 'x must be positive'
+# assert x < 0  # Raises AssertionError
+```"
+What’s `eval()`?,"Evaluates a string as Python code.
+
+**Example:**
+```python
+x = 1
+print(eval('x + 2'))  # 3
+```
+
+Security risk—avoid with untrusted input."
+How do I use `exec()`?,"Executes dynamic Python code.
+
+**Example:**
+```python
+code = 'for i in range(2): print(i)'
+exec(code)  # 0
+1
+```
+
+Like `eval()`, risky with untrusted input."
+What’s `compile()`?,"Compiles code into a code object.
+
+**Example:**
+```python
+code = compile('print(5)', '<string>', 'exec')
+exec(code)  # 5
+```"
+How do I use `__import__()`?,"Dynamic import.
+
+**Example:**
+```python
+math = __import__('math')
+print(math.sqrt(16))  # 4.0
+```"
+What’s `reload()`?,"Reloads a module (Python 3 via `importlib`).
+
+**Example:**
+```python
+from importlib import reload
+import mymod
+reload(mymod)
+```"
+How do I use `imp`?,"Older module import (deprecated).
+
+**Example:**
+```python
+import imp
+mymod = imp.load_source('mymod', 'mymod.py')
+```"
+What’s `pkgutil`?,"Utilities for packages.
+
+**Example:**
+```python
+import pkgutil
+data = pkgutil.get_data('mypkg', 'data.txt')
+```"
+How do I use `sys.modules`?,"Dict of loaded modules.
+
+**Example:**
+```python
+import sys
+print('math' in sys.modules)  # False
+import math
+print('math' in sys.modules)  # True
+```"
+What’s `sys.executable`?,"Path to Python interpreter.
+
+**Example:**
+```python
+import sys
+print(sys.executable)  # /path/to/python
+```"
+How do I use `sys.getrefcount()`?,"Counts references to an object.
+
+**Example:**
+```python
+import sys
+x = []
+print(sys.getrefcount(x))  # 2+
+```"
+What’s `sys.getsizeof()`?,"Size of object in bytes.
+
+**Example:**
+```python
+import sys
+print(sys.getsizeof([1, 2]))  # Memory used
+```"
+How do I use `sys.setrecursionlimit()`?,"Sets max recursion depth.
+
+**Example:**
+```python
+import sys
+sys.setrecursionlimit(2000)
+```"
+What’s `types` module?,"Defines type objects.
+
+**Example:**
+```python
+from types import FunctionType
+def f(): pass
+print(isinstance(f, FunctionType))  # True
+```"
+How do I use `functools.partial()`?,"Fixes function arguments.
+
+**Example:**
+```python
+from functools import partial
+def add(a, b):
+    return a + b
+add5 = partial(add, 5)
+print(add5(3))  # 8
+```"
+What’s `functools.lru_cache`?,"Memoizes function calls.
+
+**Example:**
+```python
+from functools import lru_cache
+@lru_cache
+def fib(n):
+    return n if n < 2 else fib(n-1) + fib(n-2)
+print(fib(10))  # 55
+```"
+How do I use `functools.reduce()`?,"Applies function cumulatively.
+
+**Example:**
+```python
+from functools import reduce
+def add(x, y):
+    return x + y
+print(reduce(add, [1, 2, 3]))  # 6
+```"
+What’s `functools.wraps()`?,"Preserves wrapped function metadata.
+
+**Example:**
+```python
+from functools import wraps
+def deco(f):
+    @wraps(f)
+    def w(): pass
+    return w
+```"
+How do I use `operator.itemgetter()`?,"Gets items by index/key.
+
+**Example:**
+```python
+from operator import itemgetter
+l = [(1, 'a'), (2, 'b')]
+print(sorted(l, key=itemgetter(1)))  # [(1, 'a'), (2, 'b')]
+```"
+What’s `operator.attrgetter()`?,"Gets object attributes.
+
+**Example:**
+```python
+from operator import attrgetter
+class C:
+    def __init__(self, x):
+        self.x = x
+c = C(5)
+get_x = attrgetter('x')
+print(get_x(c))  # 5
+```"
+How do I use `operator.add()`?,"Functional addition.
+
+**Example:**
+```python
+from operator import add
+print(add(2, 3))  # 5
+print(reduce(add, [1, 2]))  # 3
+```"
+What’s `itertools.count()`?,"Infinite counter.
+
+**Example:**
+```python
+from itertools import count, islice
+c = count(10, 2)
+print(list(islice(c, 3)))  # [10, 12, 14]
+```"
+How do I use `itertools.islice()` with step?,"Slices with step.
+
+**Example:**
+```python
+from itertools import islice
+print(list(islice(range(10), 0, None, 2)))  # [0, 2, 4, 6, 8]
+```"
+What’s `itertools.chain.from_iterable()`?,"Chains from nested iterable.
+
+**Example:**
+```python
+from itertools import chain
+print(list(chain.from_iterable([[1, 2], [3]])))  # [1, 2, 3]
+```"
+How do I use `itertools.combinations_with_replacement()`?,"Combinations with repeats.
+
+**Example:**
+```python
+from itertools import combinations_with_replacement
+print(list(combinations_with_replacement([1, 2], 2)))  # [(1, 1), (1, 2), (2, 2)]
+```"
+What’s `collections.OrderedDict`?,"Dict with order (pre-3.7).
+
+**Example:**
+```python
+from collections import OrderedDict
+d = OrderedDict([('a', 1), ('b', 2)])
+print(list(d))  # ['a', 'b']
+```"
+How do I use `collections.ChainMap()`?,"Combines dicts.
+
+**Example:**
+```python
+from collections import ChainMap
+d1 = {'a': 1}
+d2 = {'b': 2}
+cm = ChainMap(d1, d2)
+print(cm['a'])  # 1
+```"
+What’s `collections.deque` with maxlen?,"Bounded queue.
+
+**Example:**
+```python
+from collections import deque
+d = deque(maxlen=2)
+d.append(1); d.append(2); d.append(3)
+print(d)  # deque([2, 3], maxlen=2)
+```"
+How do I use `array` module?,"Efficient arrays.
+
+**Example:**
+```python
+from array import array
+a = array('i', [1, 2, 3])  # Signed ints
+print(a)  # array('i', [1, 2, 3])
+```"
+What’s `bisect` module?,"Maintains sorted lists.
+
+**Example:**
+```python
+import bisect
+l = [1, 3, 4]
+bisect.insort(l, 2)
+print(l)  # [1, 2, 3, 4]
+```"
+How do I use `bisect.bisect()`?,"Finds insertion point.
+
+**Example:**
+```python
+import bisect
+l = [1, 3, 4]
+print(bisect.bisect(l, 2))  # 1
+```"
+What’s `heapq` module?,"Heap queue (priority queue).
+
+**Example:**
+```python
+import heapq
+h = [3, 1, 4]
+heapq.heapify(h)
+print(heapq.heappop(h))  # 1
+```"
+How do I use `heapq.nlargest()`?,"Gets n largest items.
+
+**Example:**
+```python
+import heapq
+print(heapq.nlargest(2, [4, 1, 3]))  # [4, 3]
+```"
+What’s `heapq.nsmallest()`?,"Gets n smallest items.
+
+**Example:**
+```python
+import heapq
+print(heapq.nsmallest(2, [4, 1, 3]))  # [1, 3]
+```"
+How do I use `random.shuffle()`?,"Shuffles a list in place.
+
+**Example:**
+```python
+import random
+l = [1, 2, 3]
+random.shuffle(l)
+print(l)  # e.g., [3, 1, 2]
+```"
+What’s `random.sample()`?,"Random subset without replacement.
+
+**Example:**
+```python
+import random
+print(random.sample([1, 2, 3], 2))  # e.g., [2, 1]
+```"
+How do I use `random.uniform()`?,"Random float in range.
+
+**Example:**
+```python
+import random
+print(random.uniform(1, 5))  # e.g., 3.14
+```"
+What’s `random.seed()`?,"Sets random seed for reproducibility.
+
+**Example:**
+```python
+import random
+random.seed(42)
+print(random.randint(1, 10))  # Same each time
+```"
+How do I use `secrets` module?,"Secure random values.
+
+**Example:**
+```python
+import secrets
+print(secrets.token_hex(8))  # 16-char hex
+```"
+What’s `fractions` module?,"Rational numbers.
+
+**Example:**
+```python
+from fractions import Fraction
+f = Fraction(1, 2)
+print(f + 1)  # 3/2
+```"
+How do I use `decimal`?,"Precise decimal arithmetic.
+
+**Example:**
+```python
+from decimal import Decimal
+print(Decimal('0.1') + Decimal('0.2'))  # 0.3
+```"
+What’s `decimal.getcontext()`?,"Sets precision.
+
+**Example:**
+```python
+from decimal import getcontext, Decimal
+getcontext().prec = 4
+print(Decimal('1') / Decimal('3'))  # 0.3333
+```"
+How do I use `cmath`?,"Complex math.
+
+**Example:**
+```python
+import cmath
+print(cmath.sqrt(-1))  # 1j
+```"
+What’s `statistics.harmonic_mean()`?,"Harmonic mean.
+
+**Example:**
+```python
+from statistics import harmonic_mean
+print(harmonic_mean([1, 2, 4]))  # 1.714...
+```"
+How do I use `statistics.geometric_mean()`?,"Geometric mean.
+
+**Example:**
+```python
+from statistics import geometric_mean
+print(geometric_mean([1, 2, 4]))  # 2.0
+```"
+What’s `statistics.multimode()`?,"All modes.
+
+**Example:**
+```python
+from statistics import multimode
+print(multimode([1, 1, 2, 2]))  # [1, 2]
+```"
+How do I use `statistics.pstdev()`?,"Population standard deviation.
+
+**Example:**
+```python
+from statistics import pstdev
+print(pstdev([1, 2, 3]))  # 0.816...
+```"
+What’s `time.clock()`?,"Deprecated CPU time (use `time.process_time()`).
+
+**Example:**
+```python
+import time
+print(time.process_time())
+```"
+How do I use `time.gmtime()`?,"UTC time tuple.
+
+**Example:**
+```python
+import time
+print(time.gmtime())  # time.struct_time(...)
+```"
+What’s `time.localtime()`?,"Local time tuple.
+
+**Example:**
+```python
+import time
+print(time.localtime())  # time.struct_time(...)
+```"
+How do I use `time.mktime()`?,"Converts time tuple to timestamp.
+
+**Example:**
+```python
+import time
+t = time.localtime()
+print(time.mktime(t))
+```"
+What’s `time.asctime()`?,"Formats time tuple.
+
+**Example:**
+```python
+import time
+print(time.asctime())  # e.g., Sat Apr 5...
+```"
+How do I use `calendar.isleap()`?,"Checks leap year.
+
+**Example:**
+```python
+import calendar
+print(calendar.isleap(2024))  # True
+```"
+What’s `calendar.weekday()`?,"Day of week (0-6).
+
+**Example:**
+```python
+import calendar
+print(calendar.weekday(2025, 4, 5))  # 5 (Saturday)
+```"
+How do I use `calendar.monthrange()`?,"First day, days in month.
+
+**Example:**
+```python
+import calendar
+print(calendar.monthrange(2025, 4))  # (1, 30)
+```"
+What’s `difflib` module?,"Compares sequences.
+
+**Example:**
+```python
+import difflib
+print(difflib.ndiff(['a'], ['b']))
+```"
+How do I use `difflib.get_close_matches()`?,"Finds similar strings.
+
+**Example:**
+```python
+import difflib
+print(difflib.get_close_matches('appel', ['apple', 'banana']))  # ['apple']
+```"
+What’s `filecmp` module?,"Compares files.
+
+**Example:**
+```python
+import filecmp
+print(filecmp.cmp('file1.txt', 'file2.txt'))  # True/False
+```"
+How do I use `linecache`?,"Reads file lines without opening.
+
+**Example:**
+```python
+import linecache
+print(linecache.getline('file.txt', 1))  # First line
+```"
+What’s `tracemalloc`?,"Tracks memory usage.
+
+**Example:**
+```python
+import tracemalloc
+tracemalloc.start()
+x = [1] * 1000
+print(tracemalloc.get_traced_memory())
+```"
+How do I use `pprint`?,"Pretty-prints data.
+
+**Example:**
+```python
+from pprint import pprint
+d = {'a': [1, 2, 3]}
+pprint(d)  # Nicely formatted
+```"
+What’s `reprlib`?,"Custom repr for large objects.
+
+**Example:**
+```python
+import reprlib
+r = reprlib.Repr()
+print(r.repr([1] * 100))  # Shortened
+```"
+How do I use `enum`?,"Defines enumerations.
+
+**Example:**
+```python
+from enum import Enum
+class Color(Enum):
+    RED = 1
+print(Color.RED)  # Color.RED
+```"
+What’s `enum.auto()`?,"Auto-assigns enum values.
+
+**Example:**
+```python
+from enum import Enum, auto
+class Color(Enum):
+    RED = auto()  # 1
+    BLUE = auto()  # 2
+```"
+How do I use `dataclasses`?,"Simplifies class creation.
+
+**Example:**
+```python
+from dataclasses import dataclass
+@dataclass
+class Point:
+    x: int
+    y: int
+p = Point(1, 2)
+print(p)  # Point(x=1, y=2)
+```"
+What’s `dataclasses.field()`?,"Customizes dataclass fields.
+
+**Example:**
+```python
+from dataclasses import dataclass, field
+@dataclass
+class C:
+    x: list = field(default_factory=list)
+```"
+How do I use `typing` module?,"Type hints.
+
+**Example:**
+```python
+from typing import List
+def f(x: List[int]) -> int:
+    return sum(x)
+```"
+What’s `typing.Optional`?,"Type or None.
+
+**Example:**
+```python
+from typing import Optional
+def f(x: Optional[int]) -> int:
+    return x or 0
+```"
+How do I use `typing.Union`?,"Multiple possible types.
+
+**Example:**
+```python
+from typing import Union
+def f(x: Union[int, str]) -> str:
+    return str(x)
+```"
+What’s `typing.Dict`?,"Typed dictionary.
+
+**Example:**
+```python
+from typing import Dict
+def f(d: Dict[str, int]) -> int:
+    return sum(d.values())
+```"
+How do I use `typing.NamedTuple`?,"Typed named tuple.
+
+**Example:**
+```python
+from typing import NamedTuple
+class Point(NamedTuple):
+    x: int
+    y: int
+p = Point(1, 2)
+```"
+What’s `typing.Any`?,"Any type.
+
+**Example:**
+```python
+from typing import Any
+def f(x: Any) -> Any:
+    return x
+```"
+How do I use `contextlib`?,"Utilities for context managers.
+
+**Example:**
+```python
+from contextlib import contextmanager
+@contextmanager
+def temp():
+    print('Enter')
+    yield
+    print('Exit')
+with temp():
+    print('Inside')
+```"
+What’s `contextlib.suppress()`?,"Ignores exceptions.
+
+**Example:**
+```python
+from contextlib import suppress
+with suppress(FileNotFoundError):
+    os.remove('missing.txt')
+```"
+How do I use `contextlib.redirect_stdout()`?,"Redirects print output.
+
+**Example:**
+```python
+from contextlib import redirect_stdout
+import io
+f = io.StringIO()
+with redirect_stdout(f):
+    print('Hi')
+print(f.getvalue())  # Hi
+```"
+What’s `asyncio.sleep()`?,"Async delay.
+
+**Example:**
+```python
+import asyncio
+async def f():
+    await asyncio.sleep(1)
+    print('Hi')
+asyncio.run(f())
+```"
+How do I use `asyncio.run()`?,"Runs async main function.
+
+**Example:**
+```python
+import asyncio
+async def main():
+    print('Hi')
+asyncio.run(main())
+```"
+What’s `asyncio.create_task()`?,"Schedules async task.
+
+**Example:**
+```python
+import asyncio
+async def f():
+    print('Hi')
+async def main():
+    task = asyncio.create_task(f())
+    await task
+asyncio.run(main())
+```"
+How do I check if an object is iterable?,"Use `collections.abc.Iterable` or try `iter()`.
+
+**Examples:**
+```python
+from collections.abc import Iterable
+print(isinstance([1, 2], Iterable))  # True
+print(isinstance(5, Iterable))  # False
+
+try:
+    iter(5)
+except TypeError:
+    print('Not iterable')
+```"
+What’s `__slots__` in a class?,"Restricts attributes, saves memory.
+
+**Example:**
+```python
+class C:
+    __slots__ = ['x']
+    def __init__(self):
+        self.x = 1
+c = C()
+# c.y = 2  # AttributeError
+```"
+How do I use `__getattr__()`?,"Handles missing attribute access.
+
+**Example:**
+```python
+class C:
+    def __getattr__(self, name):
+        return f'{name} not found'
+c = C()
+print(c.xyz)  # xyz not found
+```"
+What’s `__setattr__()`?,"Customizes attribute setting.
+
+**Example:**
+```python
+class C:
+    def __setattr__(self, name, value):
+        self.__dict__[name] = value * 2
+c = C()
+c.x = 5
+print(c.x)  # 10
+```"
+How do I use `__delattr__()`?,"Customizes attribute deletion.
+
+**Example:**
+```python
+class C:
+    def __delattr__(self, name):
+        print(f'Deleting {name}')
+        del self.__dict__[name]
+c = C()
+c.x = 1
+del c.x  # Deleting x
+```"
+What’s `__call__()`?,"Makes an instance callable.
+
+**Example:**
+```python
+class C:
+    def __call__(self, x):
+        return x + 1
+c = C()
+print(c(5))  # 6
+```"
+How do I use `__str__()`?,"Defines string representation.
+
+**Example:**
+```python
+class C:
+    def __str__(self):
+        return 'Hi'
+c = C()
+print(str(c))  # Hi
+```"
+What’s `__repr__()`?,"Developer-friendly string.
+
+**Example:**
+```python
+class C:
+    def __repr__(self):
+        return 'C()'
+c = C()
+print(repr(c))  # C()
+```"
+How do I use `__len__()`?,"Defines length.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.data = [1, 2]
+    def __len__(self):
+        return len(self.data)
+c = C()
+print(len(c))  # 2
+```"
+What’s `__getitem__()`?,"Enables indexing.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.data = [1, 2]
+    def __getitem__(self, i):
+        return self.data[i]
+c = C()
+print(c[0])  # 1
+```"
+How do I use `__setitem__()`?,"Enables item assignment.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.data = [1, 2]
+    def __setitem__(self, i, value):
+        self.data[i] = value
+c = C()
+c[0] = 5
+print(c.data)  # [5, 2]
+```"
+What’s `__delitem__()`?,"Enables item deletion.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.data = [1, 2]
+    def __delitem__(self, i):
+        del self.data[i]
+c = C()
+del c[0]
+print(c.data)  # [2]
+```"
+How do I use `__iter__()`?,"Makes object iterable.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.data = [1, 2]
+    def __iter__(self):
+        return iter(self.data)
+c = C()
+for x in c:
+    print(x)  # 1, 2
+```"
+What’s `__next__()`?,"Defines iterator behavior.
+
+**Example:**
+```python
+class C:
+    def __init__(self):
+        self.n = 0
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.n < 2:
+            self.n += 1
+            return self.n
+        raise StopIteration
+c = C()
+for x in c:
+    print(x)  # 1, 2
+```"
+How do I use `__add__()`?,"Defines addition.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __add__(self, other):
+        return C(self.x + other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(2)
+c2 = C(3)
+print(c1 + c2)  # 5
+```"
+What’s `__sub__()`?,"Defines subtraction.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __sub__(self, other):
+        return C(self.x - other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(5)
+c2 = C(3)
+print(c1 - c2)  # 2
+```"
+How do I use `__mul__()`?,"Defines multiplication.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __mul__(self, other):
+        return C(self.x * other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(2)
+c2 = C(3)
+print(c1 * c2)  # 6
+```"
+What’s `__truediv__()`?,"Defines true division.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __truediv__(self, other):
+        return C(self.x / other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(6)
+c2 = C(2)
+print(c1 / c2)  # 3.0
+```"
+How do I use `__eq__()`?,"Defines equality.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __eq__(self, other):
+        return self.x == other.x
+c1 = C(1)
+c2 = C(1)
+print(c1 == c2)  # True
+```"
+What’s `__ne__()`?,"Defines inequality.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ne__(self, other):
+        return self.x != other.x
+c1 = C(1)
+c2 = C(2)
+print(c1 != c2)  # True
+```"
+How do I use `__lt__()`?,"Defines less than.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __lt__(self, other):
+        return self.x < other.x
+c1 = C(1)
+c2 = C(2)
+print(c1 < c2)  # True
+```"
+What’s `__gt__()`?,"Defines greater than.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __gt__(self, other):
+        return self.x > other.x
+c1 = C(2)
+c2 = C(1)
+print(c1 > c2)  # True
+```"
+How do I use `__le__()`?,"Defines less than or equal.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __le__(self, other):
+        return self.x <= other.x
+c1 = C(1)
+c2 = C(1)
+print(c1 <= c2)  # True
+```"
+What’s `__ge__()`?,"Defines greater than or equal.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ge__(self, other):
+        return self.x >= other.x
+c1 = C(2)
+c2 = C(2)
+print(c1 >= c2)  # True
+```"
+How do I use `__enter__()`?,"Defines context manager entry.
+
+**Example:**
+```python
+class C:
+    def __enter__(self):
+        print('Enter')
+        return self
+    def __exit__(self, *args):
+        print('Exit')
+with C() as c:
+    print('Inside')
+```"
+What’s `__exit__()`?,"Defines context manager exit.
+
+**Example:**
+```python
+class C:
+    def __enter__(self):
+        return self
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('Exit')
+with C():
+    print('Inside')
+```"
+How do I use `__init_subclass__()`?,"Customizes subclass creation.
+
+**Example:**
+```python
+class Base:
+    def __init_subclass__(cls):
+        cls.x = 1
+class Sub(Base):
+    pass
+print(Sub.x)  # 1
+```"
+What’s `__subclasshook__()`?,"Customizes `isinstance()`.
+
+**Example:**
+```python
+class C:
+    @classmethod
+    def __subclasshook__(cls, sub):
+        return True
+print(isinstance(5, C))  # True
+```"
+How do I use `__prepare__()`?,"Customizes class namespace.
+
+**Example:**
+```python
+class Meta(type):
+    @classmethod
+    def __prepare__(mcs, name, bases):
+        return {'x': 1}
+class C(metaclass=Meta):
+    pass
+print(C.x)  # 1
+```"
+What’s `__new__()`?,"Creates instance before `__init__`.
+
+**Example:**
+```python
+class C:
+    def __new__(cls):
+        return super().__new__(cls)
+    def __init__(self):
+        self.x = 1
+c = C()
+print(c.x)  # 1
+```"
+How do I use `__del__()`?,"Destructor (unreliable).
+
+**Example:**
+```python
+class C:
+    def __del__(self):
+        print('Deleted')
+c = C()
+del c  # May print Deleted
+```"
+What’s `__bool__()`?,"Defines truthiness.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __bool__(self):
+        return self.x > 0
+c = C(1)
+print(bool(c))  # True
+```"
+How do I use `__bytes__()`?,"Defines bytes representation.
+
+**Example:**
+```python
+class C:
+    def __bytes__(self):
+        return b'hi'
+c = C()
+print(bytes(c))  # b'hi'
+```"
+What’s `__format__()`?,"Customizes format spec.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __format__(self, spec):
+        return f'{self.x:{spec}}'
+c = C(5)
+print(f'{c:03d}')  # 005
+```"
+How do I use `__hash__()`?,"Defines hash value.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __hash__(self):
+        return hash(self.x)
+    def __eq__(self, other):
+        return self.x == other.x
+c = C(1)
+print(hash(c))
+```"
+What’s `__index__()`?,"Converts to integer index.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __index__(self):
+        return self.x
+c = C(2)
+print([1, 2, 3][c])  # 3
+```"
+How do I use `__int__()`?,"Converts to integer.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __int__(self):
+        return self.x
+c = C(5)
+print(int(c))  # 5
+```"
+What’s `__float__()`?,"Converts to float.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __float__(self):
+        return float(self.x)
+c = C(5)
+print(float(c))  # 5.0
+```"
+How do I use `__complex__()`?,"Converts to complex.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __complex__(self):
+        return complex(self.x, 0)
+c = C(5)
+print(complex(c))  # (5+0j)
+```"
+What’s `__round__()`?,"Defines rounding.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __round__(self, n=0):
+        return round(self.x, n)
+c = C(5.7)
+print(round(c))  # 6
+```"
+How do I use `__trunc__()`?,"Truncates to integer.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __trunc__(self):
+        return int(self.x)
+c = C(5.7)
+import math
+print(math.trunc(c))  # 5
+```"
+What’s `__floor__()`?,"Floor to integer.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __floor__(self):
+        return math.floor(self.x)
+c = C(5.7)
+import math
+print(math.floor(c))  # 5
+```"
+How do I use `__ceil__()`?,"Ceiling to integer.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ceil__(self):
+        return math.ceil(self.x)
+c = C(5.3)
+import math
+print(math.ceil(c))  # 6
+```"
+What’s `__abs__()`?,"Defines absolute value.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __abs__(self):
+        return abs(self.x)
+c = C(-5)
+print(abs(c))  # 5
+```"
+How do I use `__pos__()`?,"Defines unary plus.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __pos__(self):
+        return C(+self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+print(+c)  # 5
+```"
+What’s `__neg__()`?,"Defines unary minus.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __neg__(self):
+        return C(-self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+print(-c)  # -5
+```"
+How do I use `__invert__()`?,"Defines bitwise NOT.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __invert__(self):
+        return C(~self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+print(~c)  # -6
+```"
+What’s `__and__()`?,"Defines bitwise AND.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __and__(self, other):
+        return C(self.x & other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(5)
+c2 = C(3)
+print(c1 & c2)  # 1
+```"
+How do I use `__or__()`?,"Defines bitwise OR.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __or__(self, other):
+        return C(self.x | other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(5)
+c2 = C(2)
+print(c1 | c2)  # 7
+```"
+What’s `__xor__()`?,"Defines bitwise XOR.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __xor__(self, other):
+        return C(self.x ^ other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(5)
+c2 = C(3)
+print(c1 ^ c2)  # 6
+```"
+How do I use `__lshift__()`?,"Defines left shift.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __lshift__(self, other):
+        return C(self.x << other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(2)
+c2 = C(1)
+print(c1 << c2)  # 4
+```"
+What’s `__rshift__()`?,"Defines right shift.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rshift__(self, other):
+        return C(self.x >> other.x)
+    def __str__(self):
+        return str(self.x)
+c1 = C(4)
+c2 = C(1)
+print(c1 >> c2)  # 2
+```"
+How do I use `__iadd__()`?,"Defines in-place addition.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __iadd__(self, other):
+        self.x += other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+c += C(3)
+print(c)  # 5
+```"
+What’s `__isub__()`?,"Defines in-place subtraction.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __isub__(self, other):
+        self.x -= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+c -= C(3)
+print(c)  # 2
+```"
+How do I use `__imul__()`?,"Defines in-place multiplication.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __imul__(self, other):
+        self.x *= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+c *= C(3)
+print(c)  # 6
+```"
+What’s `__itruediv__()`?,"Defines in-place division.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __itruediv__(self, other):
+        self.x /= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(6)
+c /= C(2)
+print(c)  # 3.0
+```"
+How do I use `__iand__()`?,"Defines in-place AND.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __iand__(self, other):
+        self.x &= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+c &= C(3)
+print(c)  # 1
+```"
+What’s `__ior__()`?,"Defines in-place OR.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ior__(self, other):
+        self.x |= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+c |= C(2)
+print(c)  # 7
+```"
+How do I use `__ixor__()`?,"Defines in-place XOR.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ixor__(self, other):
+        self.x ^= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(5)
+c ^= C(3)
+print(c)  # 6
+```"
+What’s `__ilshift__()`?,"Defines in-place left shift.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ilshift__(self, other):
+        self.x <<= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+c <<= C(1)
+print(c)  # 4
+```"
+How do I use `__irshift__()`?,"Defines in-place right shift.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __irshift__(self, other):
+        self.x >>= other.x
+        return self
+    def __str__(self):
+        return str(self.x)
+c = C(4)
+c >>= C(1)
+print(c)  # 2
+```"
+What’s `__radd__()`?,"Right-side addition.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __radd__(self, other):
+        return C(other + self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+print(3 + c)  # 5
+```"
+How do I use `__rsub__()`?,"Right-side subtraction.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rsub__(self, other):
+        return C(other - self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+print(5 - c)  # 3
+```"
+What’s `__rmul__()`?,"Right-side multiplication.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rmul__(self, other):
+        return C(other * self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+print(3 * c)  # 6
+```"
+How do I use `__rtruediv__()`?,"Right-side division.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rtruediv__(self, other):
+        return C(other / self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+print(6 / c)  # 3.0
+```"
+What’s `__rand__()`?,"Right-side AND.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rand__(self, other):
+        return C(other & self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(3)
+print(5 & c)  # 1
+```"
+How do I use `__ror__()`?,"Right-side OR.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __ror__(self, other):
+        return C(other | self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(2)
+print(5 | c)  # 7
+```"
+What’s `__rxor__()`?,"Right-side XOR.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rxor__(self, other):
+        return C(other ^ self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(3)
+print(5 ^ c)  # 6
+```"
+How do I use `__rlshift__()`?,"Right-side left shift.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rlshift__(self, other):
+        return C(other << self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(1)
+print(2 << c)  # 4
+```"
+What’s `__rrshift__()`?,"Right-side right shift.
+
+**Example:**
+```python
+class C:
+    def __init__(self, x):
+        self.x = x
+    def __rrshift__(self, other):
+        return C(other >> self.x)
+    def __str__(self):
+        return str(self.x)
+c = C(1)
+print(4 >> c)  # 2
+```"
+How do I profile a Python script?,"Use `cProfile` for detailed performance stats.
+
+**Explanation:**
+`cProfile` tracks function calls, execution time, and call counts, helping identify bottlenecks. Output can be saved and analyzed.
+
+**Example:**
+```python
+import cProfile
+def slow():
+    sum(range(1000000))
+cProfile.run('slow()')
+```
+
+**Output:** Shows calls, time per call, and cumulative time. Use `pstats` for sorting:
+```python
+import pstats
+profiler = cProfile.Profile()
+profiler.enable()
+slow()
+profiler.disable()
+stats = pstats.Stats(profiler).sort_stats('cumulative')
+stats.print_stats()
+```
+
+Alternative: `time` for simple timing, but less detailed."
+What’s the `memory_profiler` module?,"Tracks memory usage line-by-line.
+
+**Explanation:**
+Useful for diagnosing memory leaks. Requires installation (`pip install memory_profiler`) and decorator usage.
+
+**Example:**
+```python
+from memory_profiler import profile
+@profile
+def mem_heavy():
+    x = [1] * 10**6
+    return sum(x)
+mem_heavy()
+```
+
+**Output:** Line-by-line memory usage in MB. Run with `python -m memory_profiler script.py`. Helps optimize memory-intensive code."
+How do I use `line_profiler`?,"Profiles specific functions line-by-line.
+
+**Explanation:**
+Requires `pip install line_profiler`. Add `@profile` to functions and run with `kernprof -l script.py`, then `python -m line_profiler script.py.lprof`.
+
+**Example:**
+```python
+@profile
+def slow_loop():
+    total = 0
+    for i in range(100000):
+        total += i
+    return total
+slow_loop()
+```
+
+**Output:** Time per line, hits, and percentage. Great for pinpointing slow lines."
+What’s `timeit` module?,"Measures execution time of small code snippets.
+
+**Explanation:**
+Runs code multiple times for accurate timing, avoiding system noise. Can be used in scripts or CLI.
+
+**Example:**
+```python
+import timeit
+print(timeit.timeit('sum(range(100))', number=1000))  # Time for 1000 runs
+```
+
+**CLI:**
+```bash
+python -m timeit 'sum(range(100))'
+```
+
+**Output:** Average time in seconds. Use `repeat` for multiple trials."
+How do I use `unittest`?,"Framework for writing and running tests.
+
+**Explanation:**
+Define test cases in classes inheriting `unittest.TestCase`. Use assertions like `assertEqual`.
+
+**Example:**
+```python
+import unittest
+def add(a, b):
+    return a + b
+class TestAdd(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(add(2, 3), 5)
+if __name__ == '__main__':
+    unittest.main()
+```
+
+**Run:** `python -m unittest script.py`. Reports pass/fail."
+What’s `pytest`?,"A simpler testing framework.
+
+**Explanation:**
+Install with `pip install pytest`. Write tests as functions with `assert`, no class needed. Autodiscovers `test_*.py` files.
+
+**Example:**
+```python
+def add(a, b):
+    return a + b
+def test_add():
+    assert add(2, 3) == 5
+```
+
+**Run:** `pytest`. More concise than `unittest`, with rich plugins."
+How do I mock with `unittest.mock`?,"Simulates objects for testing.
+
+**Explanation:**
+`Mock` replaces dependencies to isolate code. Use `patch` to mock imports.
+
+**Example:**
+```python
+from unittest.mock import Mock, patch
+def fetch_data():
+    return 'real'
+with patch('__main__.fetch_data', Mock(return_value='mocked')):
+    print(fetch_data())  # mocked
+```
+
+**Assertions:** Check calls with `mock.assert_called_once()`."
+What’s `doctest`?,"Tests code in docstrings.
+
+**Explanation:**
+Embeds tests in documentation. Runs examples as tests if they match output.
+
+**Example:**
+```python
+def add(a, b):
+    '''
+    >>> add(2, 3)
+    5
+    '''
+    return a + b
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+```
+
+**Run:** `python -m doctest script.py -v`. Fails if output mismatches."
+How do I use `coverage`?,"Measures test coverage.
+
+**Explanation:**
+Install `pip install coverage`. Tracks executed lines.
+
+**Example:**
+```bash
+coverage run -m unittest script.py
+coverage report
+coverage html  # HTML report
+```
+
+**Output:** Percentage of code covered. Helps ensure thorough testing."
+What’s `hypothesis`?,"Property-based testing.
+
+**Explanation:**
+Generates random inputs to test properties. Install `pip install hypothesis`.
+
+**Example:**
+```python
+from hypothesis import given
+import hypothesis.strategies as st
+def add(a, b):
+    return a + b
+@given(st.integers(), st.integers())
+def test_add_commutative(a, b):
+    assert add(a, b) == add(b, a)
+```
+
+**Run:** `pytest`. Finds edge cases automatically."
+How do I use `asyncio.Future`?,"Represents a future result.
+
+**Explanation:**
+Used in async code to hold a value set later. Managed by event loop.
+
+**Example:**
+```python
+import asyncio
+async def set_future(fut):
+    await asyncio.sleep(1)
+    fut.set_result('Done')
+async def main():
+    fut = asyncio.Future()
+    asyncio.create_task(set_future(fut))
+    print(await fut)  # Done
+asyncio.run(main())
+```"
+What’s `asyncio.ensure_future()`?,"Schedules a coroutine as a Future.
+
+**Explanation:**
+Wraps coroutines or Futures for execution.
+
+**Example:**
+```python
+import asyncio
+async def task():
+    await asyncio.sleep(1)
+    return 'Hi'
+async def main():
+    fut = asyncio.ensure_future(task())
+    print(await fut)  # Hi
+asyncio.run(main())
+```"
+How do I use `asyncio.wait()`?,"Waits for multiple tasks.
+
+**Explanation:**
+Returns when all tasks complete or timeout. Returns done/pending sets.
+
+**Example:**
+```python
+import asyncio
+async def t(n):
+    await asyncio.sleep(n)
+    return n
+async def main():
+    tasks = [t(1), t(2)]
+    done, pending = await asyncio.wait(tasks)
+    for d in done:
+        print(d.result())  # 1, 2
+asyncio.run(main())
+```"
+What’s `asyncio.as_completed()`?,"Yields tasks as they finish.
+
+**Explanation:**
+Iterates over coroutines in completion order.
+
+**Example:**
+```python
+import asyncio
+async def t(n):
+    await asyncio.sleep(n)
+    return n
+async def main():
+    tasks = [t(2), t(1)]
+    for coro in asyncio.as_completed(tasks):
+        print(await coro)  # 1, 2
+asyncio.run(main())
+```"
+How do I use `asyncio.Lock`?,"Synchronizes async code.
+
+**Explanation:**
+Prevents concurrent access to shared resources.
+
+**Example:**
+```python
+import asyncio
+async def worker(lock, n):
+    async with lock:
+        print(f'Locked {n}')
+        await asyncio.sleep(1)
+async def main():
+    lock = asyncio.Lock()
+    await asyncio.gather(worker(lock, 1), worker(lock, 2))
+asyncio.run(main())
+```"
+What’s `asyncio.Event`?,"Signals between coroutines.
+
+**Explanation:**
+Blocks until event is set, useful for coordination.
+
+**Example:**
+```python
+import asyncio
+async def wait(e):
+    await e.wait()
+    print('Event set')
+async def main():
+    e = asyncio.Event()
+    asyncio.create_task(wait(e))
+    await asyncio.sleep(1)
+    e.set()
+asyncio.run(main())
+```"
+How do I use `asyncio.Queue`?,"Async task queue.
+
+**Explanation:**
+Thread-safe queue for producer-consumer patterns.
+
+**Example:**
+```python
+import asyncio
+async def produce(q):
+    await q.put(1)
+async def consume(q):
+    print(await q.get())  # 1
+async def main():
+    q = asyncio.Queue()
+    await asyncio.gather(produce(q), consume(q))
+asyncio.run(main())
+```"
+What’s `asyncio.TimeoutError`?,"Raised when async operation times out.
+
+**Explanation:**
+Used with `wait_for` to limit coroutine duration.
+
+**Example:**
+```python
+import asyncio
+async def long_task():
+    await asyncio.sleep(2)
+async def main():
+    try:
+        await asyncio.wait_for(long_task(), timeout=1)
+    except asyncio.TimeoutError:
+        print('Timed out')
+asyncio.run(main())
+```"
+How do I use `concurrent.futures` with threads?,"Runs tasks in thread pool.
+
+**Explanation:**
+Manages threads for I/O-bound tasks. Higher-level than `threading`.
+
+**Example:**
+```python
+from concurrent.futures import ThreadPoolExecutor
+import time
+def slow(n):
+    time.sleep(n)
+    return n
+with ThreadPoolExecutor(max_workers=2) as ex:
+    results = ex.map(slow, [1, 2])
+    print(list(results))  # [1, 2]
+```"
+What’s `concurrent.futures` with processes?,"Runs tasks in process pool.
+
+**Explanation:**
+Bypasses GIL for CPU-bound tasks.
+
+**Example:**
+```python
+from concurrent.futures import ProcessPoolExecutor
+def cpu_heavy(n):
+    return sum(i * i for i in range(n))
+with ProcessPoolExecutor(max_workers=2) as ex:
+    results = ex.map(cpu_heavy, [10**5, 10**5])
+    print(list(results))
+```"
+How do I use `threading.Event`?,"Signals between threads.
+
+**Explanation:**
+Blocks threads until event is set.
+
+**Example:**
+```python
+import threading
+import time
+def wait(e):
+    e.wait()
+    print('Event set')
+e = threading.Event()
+t = threading.Thread(target=wait, args=(e,))
+t.start()
+time.sleep(1)
+e.set()
+t.join()
+```"
+What’s `threading.Semaphore`?,"Limits concurrent access.
+
+**Explanation:**
+Controls resource access with a counter.
+
+**Example:**
+```python
+import threading
+import time
+def worker(sem, n):
+    with sem:
+        print(f'Working {n}')
+        time.sleep(1)
+sem = threading.Semaphore(2)
+threads = [threading.Thread(target=worker, args=(sem, i)) for i in range(4)]
+for t in threads: t.start()
+for t in threads: t.join()
+```"
+How do I use `multiprocessing.Queue`?,"Inter-process communication.
+
+**Explanation:**
+Shares data between processes safely.
+
+**Example:**
+```python
+from multiprocessing import Process, Queue
+def produce(q):
+    q.put(1)
+def consume(q):
+    print(q.get())  # 1
+q = Queue()
+p1 = Process(target=produce, args=(q,))
+p2 = Process(target=consume, args=(q,))
+p1.start(); p2.start()
+p1.join(); p2.join()
+```"
+What’s `multiprocessing.Pipe`?,"Two-way process communication.
+
+**Explanation:**
+Returns two connection objects for duplex comms.
+
+**Example:**
+```python
+from multiprocessing import Pipe, Process
+def sender(conn):
+    conn.send('Hi')
+def receiver(conn):
+    print(conn.recv())  # Hi
+parent, child = Pipe()
+p1 = Process(target=sender, args=(child,))
+p2 = Process(target=receiver, args=(parent,))
+p1.start(); p2.start()
+p1.join(); p2.join()
+```"
+How do I use `multiprocessing.Manager`?,"Shares data structures.
+
+**Explanation:**
+Provides shared lists, dicts, etc., across processes.
+
+**Example:**
+```python
+from multiprocessing import Process, Manager
+def update(d):
+    d['x'] = 1
+m = Manager()
+d = m.dict()
+p = Process(target=update, args=(d,))
+p.start(); p.join()
+print(d['x'])  # 1
+```"
+What’s `socketserver` module?,"Framework for network servers.
+
+**Explanation:**
+Simplifies TCP/UDP server creation.
+
+**Example:**
+```python
+from socketserver import TCPServer, BaseRequestHandler
+class Handler(BaseRequestHandler):
+    def handle(self):
+        data = self.request.recv(1024)
+        self.request.sendall(data.upper())
+server = TCPServer(('localhost', 9999), Handler)
+server.serve_forever()  # Run in thread
+```"
+How do I use `selectors`?,"Manages I/O multiplexing.
+
+**Explanation:**
+Monitors multiple sockets efficiently.
+
+**Example:**
+```python
+import selectors
+import socket
+sel = selectors.DefaultSelector()
+sock = socket.socket()
+sock.bind(('localhost', 9999))
+sock.listen()
+def accept(sock, mask):
+    conn, addr = sock.accept()
+    sel.register(conn, selectors.EVENT_READ)
+sel.register(sock, selectors.EVENT_READ, accept)
+while True:
+    events = sel.select()
+    for key, mask in events:
+        key.data(key.fileobj, mask)
+```"
+What’s `http.server`?,"Simple HTTP server.
+
+**Explanation:**
+Serves files or custom responses.
+
+**Example:**
+```python
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+server = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
+server.serve_forever()  # Serves current dir
+```"
+How do I use `ssl` module?,"Adds TLS/SSL to sockets.
+
+**Explanation:**
+Wraps sockets for secure communication.
+
+**Example:**
+```python
+import ssl
+import socket
+sock = socket.socket()
+context = ssl.create_default_context()
+secure_sock = context.wrap_socket(sock, server_hostname='example.com')
+secure_sock.connect(('example.com', 443))
+```"
+What’s `imaplib`?,"IMAP email client.
+
+**Explanation:**
+Accesses email servers.
+
+**Example:**
+```python
+import imaplib
+m = imaplib.IMAP4_SSL('imap.gmail.com')
+m.login('user@gmail.com', 'password')
+m.select('inbox')
+status, data = m.search(None, 'ALL')
+```"
+How do I use `poplib`?,"POP3 email client.
+
+**Explanation:**
+Retrieves emails from POP3 servers.
+
+**Example:**
+```python
+import poplib
+m = poplib.POP3_SSL('pop.gmail.com')
+m.user('user@gmail.com')
+m.pass_('password')
+num_msgs = len(m.list()[1])
+```"
+What’s `telnetlib`?,"Telnet client.
+
+**Explanation:**
+Interacts with Telnet servers.
+
+**Example:**
+```python
+import telnetlib
+tn = telnetlib.Telnet('localhost', 23)
+tn.write(b'ls\n')
+print(tn.read_all())
+```"
+How do I use `uuid.UUID`?,"Creates UUID objects.
+
+**Explanation:**
+Represents UUIDs with methods like `hex`.
+
+**Example:**
+```python
+import uuid
+u = uuid.UUID('{550e8400-e29b-41d4-a716-446655440000}')
+print(u.hex)  # 550e8400e29b41d4a716446655440000
+```"
+What’s `hashlib.md5()`?,"Computes MD5 hash (deprecated for security).
+
+**Explanation:**
+Fast but insecure for cryptography.
+
+**Example:**
+```python
+import hashlib
+h = hashlib.md5(b'hello')
+print(h.hexdigest())  # 5d41402abc4b2a76b9719d911017c592
+```"
+How do I use `hashlib.sha1()`?,"Computes SHA-1 hash (also deprecated).
+
+**Explanation:**
+Stronger than MD5 but still vulnerable.
+
+**Example:**
+```python
+import hashlib
+h = hashlib.sha1(b'hello')
+print(h.hexdigest())  # aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+```"
+What’s `hmac` module?,"Keyed hashing for message auth.
+
+**Explanation:**
+Securely combines hash with a key.
+
+**Example:**
+```python
+import hmac
+import hashlib
+h = hmac.new(b'key', b'msg', hashlib.sha256)
+print(h.hexdigest())
+```"
+How do I use `secrets.compare_digest()`?,"Timing-safe string comparison.
+
+**Explanation:**
+Prevents timing attacks in crypto.
+
+**Example:**
+```python
+import secrets
+print(secrets.compare_digest('abc', 'abc'))  # True
+print(secrets.compare_digest('abc', 'def'))  # False
+```"
+What’s `json.JSONEncoder`?,"Customizes JSON encoding.
+
+**Explanation:**
+Extends encoding for custom objects.
+
+**Example:**
+```python
+import json
+class C:
+    def __init__(self, x):
+        self.x = x
+class Encoder(json.JSONEncoder):
+    def default(self, obj):
+        return {'x': obj.x} if isinstance(obj, C) else super().default(obj)
+c = C(5)
+print(json.dumps(c, cls=Encoder))  # {""x"": 5}
+```"
+How do I use `json.JSONDecoder`?,"Customizes JSON decoding.
+
+**Explanation:**
+Converts JSON back to custom objects.
+
+**Example:**
+```python
+import json
+class Decoder(json.JSONDecoder):
+    def __init__(self):
+        super().__init__(object_hook=self.hook)
+    def hook(self, d):
+        return C(d['x']) if 'x' in d else d
+class C:
+    def __init__(self, x):
+        self.x = x
+data = json.loads('{""x"": 5}', cls=Decoder)
+print(data.x)  # 5
+```"
+What’s `pickle.Pickler`?,"Customizes pickling.
+
+**Explanation:**
+Serializes objects with fine control.
+
+**Example:**
+```python
+import pickle
+import io
+class C:
+    def __init__(self, x):
+        self.x = x
+f = io.BytesIO()
+p = pickle.Pickler(f)
+p.dump(C(5))
+print(f.getvalue())  # Binary data
+```"
+How do I use `pickle.Unpickler`?,"Customizes unpickling.
+
+**Explanation:**
+Deserializes with custom logic.
+
+**Example:**
+```python
+import pickle
+import io
+f = io.BytesIO(pickle.dumps(C(5)))
+u = pickle.Unpickler(f)
+obj = u.load()
+print(obj.x)  # 5
+```"
+What’s `shelve` module?,"Persistent dict-like storage.
+
+**Explanation:**
+Stores Python objects in a file using `dbm`.
+
+**Example:**
+```python
+import shelve
+with shelve.open('data') as s:
+    s['key'] = {'x': 1}
+with shelve.open('data') as s:
+    print(s['key'])  # {'x': 1}
+```"
+How do I use `dbm`?,"Key-value database.
+
+**Explanation:**
+Simple persistent storage, keys/values as bytes.
+
+**Example:**
+```python
+import dbm
+with dbm.open('data', 'c') as db:
+    db[b'key'] = b'value'
+with dbm.open('data') as db:
+    print(db[b'key'])  # b'value'
+```"
+What’s `sqlite3` module?,"Embedded SQL database.
+
+**Explanation:**
+Lightweight RDBMS in Python.
+
+**Example:**
+```python
+import sqlite3
+conn = sqlite3.connect(':memory:')
+c = conn.cursor()
+c.execute('CREATE TABLE t (x INT)')
+c.execute('INSERT INTO t VALUES (1)')
+conn.commit()
+print(c.execute('SELECT * FROM t').fetchall())  # [(1,)]
+```"
+How do I use `csv.DictReader`?,"Reads CSV as dicts.
+
+**Explanation:**
+Maps rows to fieldnames.
+
+**Example:**
+```python
+import csv
+with open('data.csv', 'w') as f:
+    f.write('a,b\n1,2')
+with open('data.csv') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row)  # {'a': '1', 'b': '2'}
+```"
+What’s `csv.DictWriter`?,"Writes dicts to CSV.
+
+**Explanation:**
+Uses fieldnames for headers.
+
+**Example:**
+```python
+import csv
+with open('data.csv', 'w', newline='') as f:
+    writer = csv.DictWriter(f, fieldnames=['a', 'b'])
+    writer.writeheader()
+    writer.writerow({'a': 1, 'b': 2})
+```"
+How do I use `xml.etree.ElementTree`?,"Parses and creates XML.
+
+**Explanation:**
+Lightweight XML handling.
+
+**Example:**
+```python
+import xml.etree.ElementTree as ET
+xml = '<root><item>1</item></root>'
+tree = ET.fromstring(xml)
+print(tree.find('item').text)  # 1
+```"
+What’s `html.parser`?,"Parses HTML.
+
+**Explanation:**
+Simple HTML parser in stdlib.
+
+**Example:**
+```python
+from html.parser import HTMLParser
+class P(HTMLParser):
+    def handle_data(self, data):
+        print(data)
+p = P()
+p.feed('<p>Hi</p>')  # Hi
+```"
+How do I use `argparse.Namespace`?,"Stores parsed args.
+
+**Explanation:**
+Default container for `argparse` results.
+
+**Example:**
+```python
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--x')
+args = parser.parse_args(['--x', '5'])
+print(args.x)  # 5
+```"
+What’s `os.path.splitext()`?,"Splits filename and extension.
+
+**Explanation:**
+Separates base from ext.
+
+**Example:**
+```python
+import os
+print(os.path.splitext('file.txt'))  # ('file', '.txt')
+```"
+How do I use `os.path.abspath()`?,"Converts to absolute path.
+
+**Explanation:**
+Resolves relative paths.
+
+**Example:**
+```python
+import os
+print(os.path.abspath('file.txt'))  # /full/path/to/file.txt
+```"
+What’s `os.path.realpath()`?,"Resolves symlinks to real path.
+
+**Explanation:**
+Canonicalizes paths.
+
+**Example:**
+```python
+import os
+print(os.path.realpath('file.txt'))  # Real path
+```"
+How do I use `os.walk()`?,"Traverses directory tree.
+
+**Explanation:**
+Yields dirpath, dirnames, filenames.
+
+**Example:**
+```python
+import os
+for dirpath, dirnames, filenames in os.walk('.'):
+    print(filenames)
+```"
+What’s `shutil.which()`?,"Finds executable in PATH.
+
+**Explanation:**
+Locates commands like `ls` or `python`.
+
+**Example:**
+```python
+import shutil
+print(shutil.which('python'))  # /path/to/python
+```"
